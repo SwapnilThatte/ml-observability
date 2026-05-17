@@ -1,6 +1,7 @@
 import requests
+from URL_DIR import FRAUD_SERVICE
 
-FRAUD_SERVICE = "http://fraud-service:8001/predict"
+FRAUD_SERVICE = f"{FRAUD_SERVICE}/predict"
 
 def call_fraud_service(payload):
 

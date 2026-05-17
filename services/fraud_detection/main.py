@@ -3,14 +3,15 @@ from model import FraudModel
 from preprocessing import preprocess
 from schemas import Transaction
 from config import *
+import uvicorn
 
 app = FastAPI(title="Fraud Service")
 
-model = FraudModel("../../models/xgboost_model.json")
+model = FraudModel("xgboost_fraud_model.json")
 
 
 @app.post("/predict")
-def predict(tx: Transaction):
+async def predict(tx: Transaction):
 
     X = preprocess(tx.dict())
 
@@ -27,3 +28,11 @@ def predict(tx: Transaction):
         "fraud_probability": float(prob),
         "decision": decision
     }
+
+
+@app.get("/")
+async def home():
+    return {"status" : "success", "message" : "Hello World from Fraud Detection Service !"}
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="127.0.0.1", port=8001, reload=True)

@@ -1,6 +1,6 @@
 import xgboost as xgb
 
-class FraudeModel:
+class FraudModel:
     def __init__(self, path: str):
         self.model = xgb.XGBClassifier()
         self.model.load_model(path)
