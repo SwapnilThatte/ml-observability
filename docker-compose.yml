@@ -1,0 +1,83 @@
+version: "3.9"
+
+services:
+
+  api-gateway:
+
+    build:
+      context: ./services/api
+
+    container_name: api-gateway
+
+    ports:
+      - "127.0.0.1:8000:8000"
+
+    depends_on:
+      - fraud-service
+
+    environment:
+      FRAUD_SERVICE_URL: http://fraud-service:8001/predict
+
+    restart: unless-stopped
+
+    networks:
+      - fraud-network
+
+
+  fraud-service:
+
+    build:
+      context: ./services/fraud_service
+
+    container_name: fraud-service
+
+    expose:
+      - "127.0.0.1:8001:8001"
+
+    volumes:
+      - ./models:/models
+
+    restart: unless-stopped
+
+    networks:
+      - fraud-network
+
+
+  monitoring-service:
+
+    build:
+      context: ./services/monitoring
+
+    container_name: monitoring-service
+
+    ports:
+      - "127.0.0.1:8002:8002"
+
+    depends_on:
+      - redis
+
+    restart: unless-stopped
+
+    networks:
+      - fraud-network
+
+
+  redis:
+
+    image: redis:7-alpine
+
+    container_name: redis
+
+    expose:
+      - "127.0.0.1:6379:6379"
+
+    restart: unless-stopped
+
+    networks:
+      - fraud-network
+
+
+networks:
+
+  fraud-network:
+    driver: bridge

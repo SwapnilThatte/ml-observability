@@ -1,4 +1,5 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+from typing import Dict
 
 class Transaction(BaseModel):
     V1: float; V2: float; V3: float; V4: float; V5: float
@@ -8,3 +9,14 @@ class Transaction(BaseModel):
     V21: float; V22: float; V23: float; V24: float; V25: float
     V26: float; V27: float; V28: float
     Amount: float
+
+class Transaction(BaseModel):
+
+    data: Dict[str, float]
+
+
+class PredictionResponse(BaseModel):
+
+    fraud_probability: float
+
+    decision: str

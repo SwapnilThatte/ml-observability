@@ -10,8 +10,8 @@ FEATURES = [f"V{i}" for i in range(1, 29)] + ["Amount"]
 
 
 # =========================================================
-# NORMAL / GOOD TRANSACTION
-# Centered around mean/median
+# GOOD TRANSACTION
+# Centered around mean
 # =========================================================
 
 def generate_good_transaction():
@@ -108,7 +108,7 @@ def generate_drifted_transaction():
 
 
 # =========================================================
-# OUT-OF-VARIANCE / ADVERSARIAL
+# OUT-OF-VARIANCE
 # Numerical stability tests
 # =========================================================
 
@@ -134,7 +134,7 @@ def generate_invalid_schema():
         "V1": "INVALID",
         "V2": [],
         "V3": {},
-        "Amount": "HACK"
+        "Amount": "ABCD"
     }
 
 
